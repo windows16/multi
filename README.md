@@ -19,7 +19,7 @@ flet+sqlite/
 
 ## 🛠️ Instalación
 
-1. Clona este repositorio o descarga los archivos:
+1. Clona este repositorio o descarga los archivos
 
 2. Instala las dependencias del proyecto:
 
