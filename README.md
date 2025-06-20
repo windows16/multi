@@ -5,10 +5,10 @@ Este es un proyecto desarrollado con [Flet](https://flet.dev/) y una base de dat
 ---
 
 <p float="left">
-  <img src="ejemplo1.jpg" alt="multi" width="300"/>
-  <img src="ejemplo2.jpg" alt="multi" width="300"/>
-  <img src="ejemplo3.jpg" alt="multi" width="300"/>
-  <img src="ejemplo4.jpg" alt="multi" width="300"/>
+  <img src="ejemplo1.jpg" alt="multi" width="250"/>
+  <img src="ejemplo2.jpg" alt="multi" width="250"/>
+  <img src="ejemplo3.jpg" alt="multi" width="250"/>
+  <img src="ejemplo4.jpg" alt="multi" width="250"/>
 </p>
 ## 📁 Estructura del proyecto
 
