@@ -334,7 +334,7 @@ def main(ven: Page):
        cursor.execute(f"insert into papelera(id_info_pedido,direccion, cliente, fecha, encargado_obra) values(\"{id_valor.value}\",\"{dir}\",\"{cli}\",\"{fechita}\",\"{alb}\");") 
        con_papelera.commit()
       except: con_papelera.close()
-      limpiar2()
+      refresh(e)
       mostrar_pedidos()
       on_change(e)
 
