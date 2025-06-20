@@ -4,7 +4,10 @@ Este es un proyecto desarrollado con [Flet](https://flet.dev/) y una base de dat
 
 ---
 
-![Formulario](ejemplo1.jpg,ejemplo2.jpg,ejemplo3.jpg,ejemplo4.jpg,)
+![Formulario](ejemplo1.jpg)
+![Formulario](ejemplo2.jpg)
+![Formulario](ejemplo3.jpg)
+![Formulario](ejemplo4.jpg)
 ## 📁 Estructura del proyecto
 
 ```
