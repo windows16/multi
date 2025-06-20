@@ -1,7 +1,7 @@
 # App Android Flet + SQLite
 
 Este es un proyecto desarrollado con [Flet](https://flet.dev/) y una base de datos local **SQLite**, que permite gestionar un sistema de alquiler de herramientas para construccion de manera sencilla a través de una interfaz gráfica en Python.
-
+![Formulario](ejemplo1.jpg,ejemplo2.jpg,ejemplo3.jpg,ejemplo4.jpg,)
 ## 📁 Estructura del proyecto
 
 ```
