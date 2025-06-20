@@ -5,9 +5,9 @@ Este es un proyecto desarrollado con [Flet](https://flet.dev/) y una base de dat
 ---
 <img src="ejemplo1.jpg" alt="multi" width="200"/>
 ![multi](ejemplo1.jpg)
-![multi](ejemplo2.jpg)
-![multi](ejemplo3.jpg)
-![multi](ejemplo4.jpg)
+![multi2](ejemplo2.jpg)
+![multi3](ejemplo3.jpg)
+![multi4](ejemplo4.jpg)
 ## 📁 Estructura del proyecto
 
 ```
