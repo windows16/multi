@@ -3,11 +3,15 @@
 Este es un proyecto desarrollado con [Flet](https://flet.dev/) y una base de datos local **SQLite**, que permite gestionar un sistema de alquiler de herramientas para construccion de manera sencilla a través de una interfaz gráfica en Python.
 
 ---
-<img src="ejemplo1.jpg" alt="multi" width="200"/>
+
 ![multi](ejemplo1.jpg)
+<img src="ejemplo1.jpg" alt="multi" width="200"/>
 ![multi2](ejemplo2.jpg)
+<img src="ejemplo2.jpg" alt="multi" width="200"/>
 ![multi3](ejemplo3.jpg)
+<img src="ejemplo3.jpg" alt="multi" width="200"/>
 ![multi4](ejemplo4.jpg)
+<img src="ejemplo4.jpg" alt="multi" width="200"/>
 ## 📁 Estructura del proyecto
 
 ```
