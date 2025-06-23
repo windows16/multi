@@ -12,17 +12,19 @@ def main(ven: Page):
       cambiar_tema.icon =icons.DARK_MODE if ven.theme_mode == ThemeMode.LIGHT else icons.LIGHT_MODE
       ven.update()
 
-   # componentes agregar una herramienta al pedido
+   
    cambiar_tema = IconButton( icon= icons.DARK_MODE,  on_click=lambda e: tema(),)
 
    temita = Container( cambiar_tema,  padding=padding.only(260,30))
-   
+
+   # componentes para agregar una herramienta al pedido
    id_pedido = TextField(  label="id_pedido", border_color=colors.BLUE_GREY_800, width=110 )
    pedido = Container(id_pedido,padding=padding.only(0,30))
    
    cant = TextField( label="cant", border_color=colors.BLUE_GREY_800,  width=60)
    
    id_herramienta = Text()
+   
    
    def llenar_texto(e):
     
@@ -33,7 +35,7 @@ def main(ven: Page):
         list_view.visible=False
         ven.update()
    
-      
+   # manejar los cambios del textfield herramienta
    def herramienta_changes(string):
       con_bd1 = sqlite3.connect("alquiler.db")
       list_view.visible=True
@@ -54,7 +56,7 @@ def main(ven: Page):
       con_bd1.close()
       ven.update()
    
-   # componentes para agregar una herramienta al pedido
+   # componentes de crud para gestionar herramientas de un pedido
    herramienta = TextField(label="herramienta 🛠️", border_color=colors.BLUE_GREY_800,
        on_change=herramienta_changes, on_focus=herramienta_changes,)
    list_view = ListView(expand=3, padding=padding.only(10),spacing=0,visible=False)
@@ -71,18 +73,17 @@ def main(ven: Page):
    desc_herra = Container(herramienta, width=200)
    cant_desc = Container(Row([cant,desc_herra]),padding=padding.only(0,20))
    
+   # limpiar los campos de info_pedido
    def limpiar_datos():
 
       cant.value=None
       herramienta.value=""
       precio.value=None
       view2.controls = [ ]
-      herramienta.error_text=None
-      cant.error_text=None
-      id_pedido.error_text=None
-      id_herramienta.value=None
+      herramienta.error_text=cant.error_text=id_pedido.error_text=id_herramienta.value=None
       ven.update()
 
+   # limpiar el campo herramienta
    def limpiar_herr():
       herramienta.value=""
       ven.update()
@@ -98,7 +99,7 @@ def main(ven: Page):
       icon=icons.CLOSE, icon_size=25, on_click=lambda e: limpiar_herr()
    )
 
-      
+   # actualizar la cantidad de la herramienta pedida   
    def update_herr(e):
       
       if not id_pedido.value:
@@ -122,7 +123,8 @@ def main(ven: Page):
          con_bd2.close()
       mostrar_pedidos()
       set_id(e)
-      
+   
+   # ver pedidos 
    def ver_p():
       con_bd3 = sqlite3.connect("alquiler.db")
       pedido = []
@@ -140,6 +142,7 @@ def main(ven: Page):
       con_bd3.close()
       ven.update()
 
+   # agregar herramientas a un pedido
    def añadir_herr():
       con_bd4 = sqlite3.connect("alquiler.db")
       consulta = con_bd4.cursor()
@@ -179,18 +182,14 @@ def main(ven: Page):
          con_bd4.close()
       ver_p()
       
-   
+   # cerrar el formulario para agregar herramientas
    def cerrar(e):
-      herramienta.value=""
-      cant.value=""
-      id_pedido.value=""
-      herramienta.error_text=None
-      cant.error_text=None
-      id_pedido.error_text=None
+      herramienta.value=cant.value=id_pedido.value=""
+      herramienta.error_text=cant.error_text=id_pedido.error_text=None
       mostrar_pedidos()
       set_id(e)
       
-
+   # añadir los componentes para agregar herramientas a un pedido
    def registrar_pedido():
       ven.controls.clear()
       desc_herra.visible=True
@@ -204,7 +203,8 @@ def main(ven: Page):
    des_he=Text(weight=FontWeight.BOLD, size=17)
    btn_cerrar= IconButton(icon=icons.ARROW_BACK_IOS, on_click=lambda e:cerrar(e))
    con_cerrar=Container(btn_cerrar,padding=padding.only(0,30))
-
+   
+   # añadir los componentes para actualizar la cant de una herramienta pedida
    def update_pedido():
       ven.controls.clear()
       desc_herra.visible=False
@@ -213,21 +213,18 @@ def main(ven: Page):
       ven.add(Row([con_cerrar,limpiar]),Text(""),Text("  "),Row([cant,des_he])
          ,Column([actualizar])
       )
-      
       ven.update()
-
+   # añadir los componentes para eliminar herramientas de un pedido
    def eliminar_pedido(e):
       con_bd5 = sqlite3.connect("alquiler.db")
       consulta = con_bd5.cursor()
       consulta.execute(f"delete from pedido where id_herramienta=(select id_herramienta from herramientas where descripcion_herramienta = \"{herramienta.value}\") and id_info_pedido={id_valor.value};") 
       con_bd5.commit()
       con_bd5.close()
-      herramienta.value=""
-      cant.value=""
-      id_pedido.value=""
+      herramienta.value=cant.value=id_pedido.value=""
       set_id(e)
       
-
+   # componentes de crud para la info de los pedidos
    ingañil = TextField(label="albañil",border_color=colors.BLUE_GREY_800, width=200)
    cliente = TextField(label="cliente", border_color=colors.BLUE_GREY_800, width=200)
    direc = TextField( label="direccion", border_color=colors.BLUE_GREY_800, width=270)
@@ -268,21 +265,13 @@ def main(ven: Page):
    actualizar4 = Container(btn_update4, padding=padding.only(150), visible=False)
    eliminar2 = Container(btn_elim2, padding=padding.only(150), visible=False)
    
+   # limpiar los componentes de info del pedido
    def limpiar2():
-       dia.value=""
-       mes.value=""
-       año.value=""
-       cliente.value=""
-       ingañil.value=""
-       direc.value=""
-       dia.error_text=None
-       mes.error_text=None
-       año.error_text=None
-       cliente.error_text=None
-       ingañil.error_text=None
-       direc.error_text=None
+       dia.value=mes.value=año.value=cliente.value=ingañil.value=direc.value=""
+       dia.error_text=mes.error_text=año.error_text=cliente.error_text=ingañil.error_text=direc.error_text=None
        ven.update()
 
+   # limpiar y refrescar los componentes de info del pedido
    def refresh(e):
        upd_info.visible=False
        registrar.visible=True
@@ -293,7 +282,7 @@ def main(ven: Page):
        on_change(e)
        ven.update()
    
-
+   # opcion para eliminar o actualizar un pedido
    def op_infop(pe):
       for p in pe.control.data:
          dia.value = p["fech"][0:2]
@@ -306,7 +295,8 @@ def main(ven: Page):
       actualizar4.visible=True
       eliminar2.visible=True
       ven.update()
-   
+    
+   # añadir componentes para actualizar un pedido
    def update_infop(e):
       ven.controls.clear()
       ven.add(Row([refrescar,cerrar2]),cliente_dir,registrar,upd_info,id_valor)
@@ -314,7 +304,7 @@ def main(ven: Page):
       registrar.visible=False
       ven.update()
 
-
+   
    def elim_infop(e):
 
       try:
@@ -449,7 +439,7 @@ def main(ven: Page):
       mostrar_pedidos()
       on_change(e)
 
-
+   # añadir componentes para registrar la info de un pedido
    def registrar_infoPedido():
       hoy = datetime.date.today()
 
@@ -463,7 +453,7 @@ def main(ven: Page):
       barra_nav.selected_index=1
       ven.add(Row([refrescar,temita]),barra_nav,cliente_dir,registrar,upd_info)
    
-   
+   # ver pedidos en papelera
    def datos_papelera(e):
       con_papelera = sqlite3.connect("alquiler.db")
       consul=con_papelera.cursor()
@@ -484,6 +474,7 @@ def main(ven: Page):
       ]
       ven.update()
    
+   # opciones para restaurar o eliminar perma algun pedido de la papelera
    def opciones_papelera(pape):
       btn_elim_perma.visible=True
       btn_restaurar.visible=True
@@ -492,6 +483,7 @@ def main(ven: Page):
       btn_elim_perma.on_click=lambda e: borrar_permanente(pape)
       ven.update()
    
+
    def borrar_permanente(pape):
       for p in pape.control.data:
          id_valor_p=p["id"]
@@ -544,12 +536,13 @@ def main(ven: Page):
       mostrar_pedidos()
       on_change(pape)
       
-
+   # quitar los componentes de la papelera y volver al dashboard
    def salir_papelera(e):
       ven.controls.clear()
       mostrar_pedidos()
       on_change(e)
 
+   # añadir componentes de la papelera
    def ver_papelera():
       ven.controls.clear()
       ven.add(Text(""),btn_salirpapelera, barra_papelera, view_papelera,
@@ -602,6 +595,7 @@ def main(ven: Page):
    btn_copiar = IconButton(icon=icons.COPY, tooltip="copiar",
     on_click=lambda e:copiar_portapapeles()) 
    copiar = Container(btn_copiar,padding=padding.only(10),visible=False,)
+   
 
    def set_id(e):
       if e.control.data:
@@ -609,37 +603,29 @@ def main(ven: Page):
             id_valor.value=p["id"]
          pedidos_exis(e)
       else: pedidos_exis(e)
-   
+
+   # que hacer con una herramienta en un pedido, si eliminarla o actualizar su cantidad 
    def op_pedido(pe):
       for p in pe.control.data:
          cant.value=p["cant"]
          herramienta.value=p["des"]
          id_pedido.value=p["id"]
-      actualizar3.visible=True
-      eliminar.visible=True
-      agregar2.visible=False
-      copiar.visible=False
+      actualizar3.visible=eliminar.visible=True
+      agregar2.visible=copiar.visible=False
       ven.update()
    
    total_f = Text(size=13, weight="bold",visible=False)
    
+   # mostrar las herramientas de un pedido con el mismo componente
    def pedidos_exis(d):
       con_bd9 = sqlite3.connect("alquiler.db")
       copiar.visible=True
       total_f.visible=True
-      herramienta.value=""
-      cant.value=""
-      id_pedido.value=""
-      actualizar4.visible=False
-      eliminar2.visible=False
-      actualizar3.visible=False
-      eliminar.visible=False
-      barra.visible=False
+      herramienta.value=cant.value=id_pedido.value=""
+      actualizar4.visible=eliminar2.visible=actualizar3.visible=eliminar.visible=barra.visible=False
       barra2.visible=True
       view.visible=False
-      view2.visible=True
-      info_p.visible=True
-      agregar2.visible=True
+      view2.visible=info_p.visible=agregar2.visible=True
       pedido = []
       consul=con_bd9.cursor()
       consul.execute(f"select inf.id_info_pedido,cliente,cant_herramienta,descripcion_herramienta,precio_alquiler,encargado_obra,fecha,direccion from info_pedido inf,herramientas h,pedido p where h.id_herramienta = p.id_herramienta and p.id_info_pedido = inf.id_info_pedido and inf.id_info_pedido={id_valor.value};")
@@ -665,22 +651,16 @@ def main(ven: Page):
       con_bd9.close()
       ven.update()
       
-
+   #mostrar los pedidos existentes con un componente listview
    def on_change(e):
         con_bd10 = sqlite3.connect("alquiler.db")
-        copiar.visible=False
-        total_f.visible=False
+        copiar.visible=total_f.visible=False
         id_valor.value=""
-        actualizar3.visible=False
-        eliminar.visible=False
-        actualizar4.visible=False
-        eliminar2.visible=False
-        agregar2.visible=False
+        actualizar3.visible=eliminar.visible=actualizar4.visible=eliminar2.visible=agregar2.visible=False
         barra.visible=True
         barra2.visible=False
         view.visible=True
-        view2.visible=False
-        info_p.visible=False
+        view2.visible=info_p.visible=False
         pedidos = []
         consulta = con_bd10.cursor()
         consulta.execute(f"select id_info_pedido,cliente,fecha,encargado_obra,direccion from info_pedido;")
@@ -704,18 +684,12 @@ def main(ven: Page):
         con_bd10.close()      
         ven.update()
 
-   
+   # limpiar las barra de busqueda de info del pedido y la barra2 que contiene las herramientas del pedido
    def clear_txt(e):
        view.controls=[]
        view2.controls=[]
-       barra2.value=""
-       barra.value=""
-       actualizar3.visible=False
-       eliminar.visible=False
-       actualizar4.visible=False
-       eliminar2.visible=False
-       total_f.visible=False
-       info_p.visible=False
+       barra2.value=barra.value=""
+       actualizar3.visible=eliminar.visible=actualizar4.visible=eliminar2.visible=total_f.visible=info_p.visible=False
        ven.update()
 
    barra = SearchBar(
@@ -732,6 +706,7 @@ def main(ven: Page):
         bar_trailing=[IconButton(icon=icons.CLOSE, on_click=clear_txt)],
         visible=False
    )
+   # componentes para la info y herramientas de los pedidos
    info_p = Text(weight=FontWeight.BOLD,size=13)
    view= ListView(expand=1, spacing=0, padding=padding.only(0))
    view2= ListView(expand=1, spacing=0, padding=padding.only(0))
@@ -759,7 +734,7 @@ def main(ven: Page):
          Row([agregar2,copiar]),id_valor
       )
       
-   
+   # componentes para crud de herramientas del inventario
    precio = TextField( label="Q 💵", border_color=colors.BLUE_GREY_800, width=65)
    btn_regisherr = ElevatedButton(text="➕agregar"
      , on_click = lambda e:agregar_regisherr())
@@ -781,6 +756,7 @@ def main(ven: Page):
    btns_si_no=Container(Row([btn_si_elim,btn_no_elim]),
       visible=False, padding=padding.only(80))
    
+   # limpiar componentes 
    def limpiar3():
       id_herramienta.value=""
       herramienta.value=""
@@ -835,7 +811,7 @@ def main(ven: Page):
       ven.update()
       limpiar3()
       
-
+   
    def no_eliminar():
       
       elimherr.visible=True
@@ -858,7 +834,7 @@ def main(ven: Page):
       btns_si_no.visible=True
       ven.update()
       
-
+   
    def update_precioher():
       
       if not precio.value:
@@ -882,7 +858,8 @@ def main(ven: Page):
          con_bd13.close()
          return  
       limpiar3()
-
+   
+   # añadir los componentes para el crud de inventario de las herramientas
    def inventario_herr():
       ven.controls.clear()
       temita.padding.left=258
